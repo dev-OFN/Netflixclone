@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <main class='bg-primary_black h-full w-full '>
+        {{movie|json_script:'movie_data'}}
+        <video src="" controls class="w-full h-screen player"></video>
+        
+    </main>
+    <script>
+        const videoEL = document.querySelector('video')
+        const movie_data = JSON.parse(document.getElementById('movie_data').textContent);
+        const url = new URL(location.href)
+        const video_param = parseInt(url.searchParams.get('epi'))?parseInt(url.searchParams.get('epi')):0
+        videoEL.setAttribute('src',`http://localhost:8080/media/${movie_data[video_param].file}`)
+    </script>
+{% endblock content %}
